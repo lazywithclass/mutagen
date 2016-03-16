@@ -1,5 +1,6 @@
 var lib = {};
+
 lib.fn = function () {
-    return false;
+  return true;
 };
 module.exports = lib;
