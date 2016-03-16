@@ -1,0 +1,25 @@
+{
+  "name": "mutagen",
+  "version": "0.0.1",
+  "description": "Yet another mutation testing library for JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alberto Zaccagni",
+  "license": "ISC",
+  "dependencies": {
+    "acorn": "^3.0.4",
+    "colors": "^1.1.2",
+    "diff": "^2.2.1",
+    "escodegen": "^1.8.0",
+    "esrecurse": "^4.0.0",
+    "fs-extra": "^0.26.6",
+    "install": "^0.5.6",
+    "npm": "^3.8.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
+  }
+}
