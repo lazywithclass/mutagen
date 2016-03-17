@@ -1,6 +1,6 @@
 describe('code', function() {
 
-  var lib = require('../lib/code'),
+  var lib = require('../../lib/code'),
       expect = require('chai').expect;
 
   describe('asAst', function() {

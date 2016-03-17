@@ -4,7 +4,7 @@
   "description": "Yet another mutation testing library for JavaScript",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "unit": "mocha test/unit/*"
   },
   "author": "Alberto Zaccagni",
   "license": "ISC",

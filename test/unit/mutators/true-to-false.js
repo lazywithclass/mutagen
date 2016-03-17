@@ -1,7 +1,7 @@
 describe('true-to-false', function() {
 
-  var lib = require('../../lib/mutators/true-to-false'),
-      code = require('../../lib/code'),
+  var lib = require('../../../lib/mutators/true-to-false'),
+      code = require('../../../lib/code'),
       expect = require('chai').expect;
 
   describe('mutants', function() {
