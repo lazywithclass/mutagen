@@ -8,30 +8,25 @@ var fs = require('fs-extra'),
     path = require('path'),
     acorn = require('acorn'),
     escodegen = require('escodegen'),
-    trueToFalse = require('../../../lib/mutators/true-to-false');
-
-function parse(o) { return acorn.parse(o, { ranges: true }); }
-function unparse(o) { return escodegen.generate(o); }
+    vm = require('vm'),
+    mockRequire = require('mock-require'),
+    trueToFalse = require('../../../lib/mutators/true-to-false'),
+    code = require('../../../lib/code');
 
 var contents = fs.readFileSync('./source.js', 'utf8'),
-    ast = parse(contents);
+    ast = code.asAst(contents),
+    mutant = code.asString(trueToFalse.mutants(ast)[0]);
 
-var mutant = unparse(trueToFalse.mutants(ast)[0]);
-
-var vm = require('vm');
-var code = [
-  fs.readFileSync('test.js', 'utf8'),
-  'var Mocha = require(\'mocha\');',
-  'new Mocha({',
-  '  reporter: path.resolve(__dirname, \'reporter\')',
-  '}).addFile(\'./test\').run()'
-].join('\n');
-
-var mock = require('mock-require');
-mock('./source', eval(mutant));
+mockRequire('./source', eval(mutant));
 
 global.module = module;
 global.require = require;
 global.path = path;
 global.__dirname = __dirname;
-new vm.Script(code).runInThisContext();
+new vm.Script([
+  fs.readFileSync('test.js', 'utf8'),
+  'var Mocha = require(\'mocha\');',
+  'new Mocha({',
+  '  reporter: path.resolve(__dirname, \'reporter\')',
+  '}).addFile(\'./test\').run()'
+].join('\n')).runInThisContext();
