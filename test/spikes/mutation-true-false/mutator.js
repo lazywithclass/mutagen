@@ -1,9 +1,3 @@
-/*
-*******
-RUN ME WITH mocha mutator.js
-*******
-*/
-
 var fs = require('fs-extra'),
     path = require('path'),
     acorn = require('acorn'),
@@ -19,14 +13,24 @@ var contents = fs.readFileSync('./source.js', 'utf8'),
 
 mockRequire('./source', eval(mutant));
 
+addMochaGlobals(global);
+
 global.module = module;
 global.require = require;
 global.path = path;
 global.__dirname = __dirname;
 new vm.Script([
   fs.readFileSync('test.js', 'utf8'),
-  'var Mocha = require(\'mocha\');',
-  'new Mocha({',
-  '  reporter: path.resolve(__dirname, \'reporter\')',
-  '}).addFile(\'./test\').run()'
+  'mocha.run()'
 ].join('\n')).runInThisContext();
+
+function addMochaGlobals(global) {
+  var Mocha = require('mocha');
+  var mocha = new Mocha({ reporter: 'reporter' });
+  var mochaContext = {};
+  mocha.suite.emit('pre-require', mochaContext, null, mocha);
+  Object.keys(mochaContext).forEach(function(key) {
+    global[key] = mochaContext[key];
+  });
+  global.mocha = mocha;
+}
