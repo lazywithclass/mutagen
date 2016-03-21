@@ -7,7 +7,7 @@
     "unit": "mocha test/unit/*"
   },
   "author": "Alberto Zaccagni",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "acorn": "^3.0.4",
     "colors": "^1.1.2",
